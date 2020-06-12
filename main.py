@@ -4,6 +4,9 @@ Deer Game
 """
 #CITE: https://arcade.academy/examples/platform_tutorial/index.html
 #DESC: Simple platformer guide on arcade website
+#CITE: https://arcade.academy/tutorials/views/02_views.html#views
+#DESC: Guide to creating different screens in python
+
 
 import arcade
 import random
@@ -30,7 +33,7 @@ SCREEN_TITLE = "Deer Game"
 #
 
 
-class MyGame(arcade.Window):
+class GameView(arcade.View):
     """
     Main application class.
 
@@ -39,8 +42,8 @@ class MyGame(arcade.Window):
     with your own code. Don't leave 'pass' in this program.
     """
 
-    def __init__(self, width, height, title):
-        super().__init__(width, height, title)
+    def __init__(self):
+        super().__init__()
 
         arcade.set_background_color(arcade.color.AMAZON)
 
@@ -190,7 +193,7 @@ class MyGame(arcade.Window):
             self.lose = True
 
         if self.end_game == True:
-            MyGame.end_game(self)
+            GameView.end_game(self)
 
 
         #enemy movement
@@ -276,13 +279,32 @@ class MyGame(arcade.Window):
             self.player_sprite.change_x = 0
 
     def end_game(self):
-        
+        view = GameOverScreen()
+        self.window.show_view(view)
+
+class GameOverScreen(arcade.View):
+
+
+    def __init__(self):
+        super().__init__()
+        self.gameover_image = arcade.load_texture("images/gameover.png")
+
+    def on_draw(self):
+        arcade.start_render()
+        self.gameover_image.draw_sized(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT)
+
+    def on_mouse_press(self,_x, _y, _button, _modifiers):
+        game_view = GameView()
+        game_view.setup()
+        self.window.show_view(game_view)
 
 
 def main():
     """ Main method """
-    game = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    game.setup()
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    game_view = GameView()
+    window.show_view(game_view)
+    game_view.setup()
     arcade.run()
 
 
