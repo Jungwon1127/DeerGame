@@ -23,14 +23,25 @@ Challenges/Lessons
 Still struggling to figure out how to use the resources availabled in arcade. 
 
 Future Steps
+
 Add in logic when the player makes contact with student to end the game
+
 Add in logic when the player makes it to the goal with all the apples the game ends
+
 Add in ending screen
+
 Add in begining screen 
+
 use Tiled to create lvls to load in for multiple lvls. 
+
 possibly add more than just apples for collectibles or points
+
 add sounds for goal, losing, etc
+
 add more images for better aesthetic
+
 add in moving animations. 
+
 Learn to properly implement scrolling capabilites 
+
 restrict screen without having to place walls around all the corners
