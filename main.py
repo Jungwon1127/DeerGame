@@ -192,8 +192,15 @@ class GameView(arcade.View):
             self.end_game = True
             self.lose = True
 
+        goal_hit_list = arcade.check_for_collision_with_list(self.player_sprite, self.goal_list)
+
+
+        for goal in goal_hit_list:
+            if self.apples_eaten >= 10:
+                GameView.end_game(self, self.lose)
+
         if self.end_game == True:
-            GameView.end_game(self)
+            GameView.end_game(self, self.lose)
 
 
         #enemy movement
@@ -278,16 +285,19 @@ class GameView(arcade.View):
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.player_sprite.change_x = 0
 
-    def end_game(self):
-        view = GameOverScreen()
+    def end_game(self ,lose):
+        view = GameOverScreen(lose)
         self.window.show_view(view)
 
 class GameOverScreen(arcade.View):
 
 
-    def __init__(self):
+    def __init__(self, lose):
         super().__init__()
-        self.gameover_image = arcade.load_texture("images/gameover.png")
+        if lose == True:
+            self.gameover_image = arcade.load_texture("images/gameover.png")
+        elif lose == False:
+            self.gameover_image = arcade.load_texture("images/win.png")
 
     def on_draw(self):
         arcade.start_render()
